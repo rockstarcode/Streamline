@@ -4,6 +4,9 @@ namespace RockstarCode\Streamline;
 use RedisException;
 use RockstarCode\Streamline\Stream;
 
+CONST RET = '
+';
+
 class Subscribe extends Stream {
 
     /**
@@ -45,9 +48,10 @@ class Subscribe extends Stream {
 
     public function subscribe($channel){
 
-        $this->bubble('ready');
+        $this->bubble(json_encode(['status'=>'ready']));
         try {
             $this->connection->subscribe(array($channel), function($redis, $activeChannel, $message){
+                error_log($message);
                 $this->bubble($message);
             });
         }

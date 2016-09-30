@@ -5,8 +5,8 @@ use RockstarCode\Streamline\Subscribe;
 
 
 if (preg_match('/^\/$/',$_SERVER['REQUEST_URI'])) {
-
-    require('frontend.php');
+    $base = $_SERVER['HTTP_HOST'];
+    include('frontend.php');
 
 } elseif (preg_match('/^\/streamline.js/',$_SERVER['REQUEST_URI'])) {
 
@@ -16,12 +16,20 @@ if (preg_match('/^\/$/',$_SERVER['REQUEST_URI'])) {
 } elseif (preg_match('/^\/subscribe/',$_SERVER['REQUEST_URI'])) {
 
     $stream = new Subscribe('tester');
+    $stream->setHandler(function($message) use($stream) {
+        if ($message == ':::end:::') {
+            $stream->unsubscribe();
+        }
+        else {
+            $stream->feedback($message);
+        }
+    });
     $stream->stream();
 
 } elseif (preg_match('/^\/publish/',$_SERVER['REQUEST_URI'])) {
 
     $stream = new Publish('tester');
-    $stream->send($_POST['message']);
+    $stream->send(json_encode(['user'=>$_POST['user'],'message'=>$_POST['message']]));
 
 }
 

@@ -112,7 +112,7 @@ window['StreamLine'] = window['StreamLine'] ? window['StreamLine'] : {};
             }
         }
 
-        xhr.send('message='+data);
+        xhr.send(data);
     }
 
 
