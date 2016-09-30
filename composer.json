@@ -1,0 +1,23 @@
+{
+    "name": "rockstarcode/streamline",
+    "description": "A free, open alternative for realtime applications",
+    "keywords": ["laravel", "realtime", "stream","socket","chat","push","longpoll"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rulian Estivalletti",
+            "email": "rulian.estivalletti@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RockstarCode\\Streamline\\": "src"
+        }
+    },
+    "require": {
+        "php": "*",
+        "predis/predis": "^1.1"
+    }
+}
+
