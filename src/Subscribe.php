@@ -51,7 +51,6 @@ class Subscribe extends Stream {
         $this->bubble(json_encode(['status'=>'ready']));
         try {
             $this->connection->subscribe(array($channel), function($redis, $activeChannel, $message){
-                error_log($message);
                 $this->bubble($message);
             });
         }

@@ -25,9 +25,60 @@ Allowing features such as
 
 
 
-### Usage
+## Quick Start
 
-``` composer require rockstarcode/streamline ```
+### Better details found on the Wiki
+
+```
+composer require rockstarcode/streamline
+
+// http://www.mysite.com/subscribe.php?channel=test
+
+<?PHP
+require('vendor/autoload.php');
+use RockstarCode\Streamline\Subscribe;
+$sub = new Subscribe($_GET['channel]);
+$sub->stream();
+
+// [POST] http://www.mysite.com/publish.php?channel=test
+<?PHP
+require('vendor/autoload.php');
+use RockstarCode\Streamline\Publish;
+$pub = new Publish($_GET['channel]);
+$pub->send($_POST['message']);
+
+
+// http://www.mysite.com/chat
+<html>
+<head>
+    <script src="http://www.mysite.com/streamline.js"></script>
+    <script>
+
+         window.onload = function(){
+             window.StreamLine.subscribe("http://www.mysite.com/subscribe.php?channel=test", function(data){
+                    // var data = JSON.parse(json); if data was json
+                    document.getElementById("chat").innerHTML += data;
+                 }
+             });
+         };
+        function sendMessage(event, item){
+            if (event.keyCode == 13) {
+                var data = [];
+                data.push('message='+item.value);
+                StreamLine.publish('http://www.mysite.com/publish.php?channel=test',data.join("&"))
+                item.value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" style="width:100%" placeholder="Send Message [press enter]" onkeyup="sendMessage(event, this)">
+    <p>Messages: </p>
+    <div id="chat"></div>
+</body>
+</html>
+```
+
 
 #### Laravel
 ```

@@ -53,7 +53,7 @@ class ChatTest extends TestCase
 
                 $outbound = null;
                 $userA->setHandler(function($message)   use ($userA,&$outbound){
-                    if ($message != 'ready'){
+                    if ($message != '{"status":"ready"}'){
                         $userA->unsubscribe();
                         $outbound = $message;
                     }
@@ -80,7 +80,7 @@ class ChatTest extends TestCase
 
                 $outbound = null;
                 $userB->setHandler(function($message)   use ($userB,&$outbound){
-                    if ($message != 'ready'){
+                    if ($message != '{"status":"ready"}'){
                         $userB->unsubscribe();
                         $outbound = $message;
                     }

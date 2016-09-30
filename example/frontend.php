@@ -4,8 +4,8 @@
     <script>
 
          window.onload = function(){
-             window.StreamLine.subscribe("//<?PHP echo $base; ?>/subscribe/test", function(data){
-                 eval('var data = ' + data);
+             window.StreamLine.subscribe("//<?PHP echo $base; ?>/subscribe/test", function(json){
+                 var data = JSON.parse(json)
                  if (data.user){
                      var template = document.getElementById("template").innerHTML;
                      template = template.replace('{user}',data.user);
