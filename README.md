@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/rockstarcode/Streamline.svg?branch=master)](https://travis-ci.org/rockstarcode/Streamline)
 
 # RockstarCode StreamLine (previously 82rules/streamline)
 
