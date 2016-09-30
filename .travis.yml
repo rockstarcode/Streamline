@@ -8,9 +8,6 @@ php:
 services:
   - redis-server
 
-before_install:
-  - phpenv config-rm xdebug.ini
-
 before_script:
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --dev
