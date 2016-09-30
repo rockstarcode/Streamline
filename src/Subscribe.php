@@ -6,31 +6,72 @@ use RockstarCode\Streamline\Stream;
 
 class Subscribe extends Stream {
 
+    /**
+     * @var holds current response handler if provided
+     */
+    protected $handle;
 
-    public function subscribe($stream){
+    public function setHandler($handler){
+        $this->handle = $handler;
+        return $this;
+    }
 
-        $this->broadcast('ready');
+    protected function bubble($message){
+        if (isset($this->handle) && $this->handle instanceof \Closure){
+            try {
+                call_user_func($this->handle, $message);
+            }
+            catch(\Exception $e){
+                throw new \Exception($e->getMessage());
+            }
+        }
+        else {
+            $this->feedback($message);
+        }
+        return $this;
+
+    }
+
+    public function feedback($message){
+
+        echo str_repeat(" ", 4096).RET;
+        echo $message.RET;
+        echo str_repeat(" ", 4096).RET;
+        ob_flush();
+        flush();
+        return $this;
+
+    }
+
+    public function subscribe($channel){
+
+        $this->bubble('ready');
         try {
-            $this->handle->subscribe(array($stream), function($redis, $channel, $message){
-                if ($message == '.end.'){
-                    die('unsubscribe');
-                }
-                $this->broadcast($message);
+            $this->connection->subscribe(array($channel), function($redis, $activeChannel, $message){
+                $this->bubble($message);
             });
         }
         catch (RedisException $e){
-            return $e->getMessage().PHP_EOL;
+            return $e->getMessage().RET;
         }
 
         return true;
 
     }
 
-    public function stream() { /// basically , if there is data in CRUD, send the message, if just a get, subscribe to path
+    public function unsubscribe(){
+        $this->connection->close();
+    }
+
+    public function stream($handler = false) {
 
         header('Content-Encoding', 'chunked');
         header('Transfer-Encoding', 'chunked');
         header('Connection', 'keep-alive');
+
+        if ($handler instanceof \Closure){
+            $this->setHandler($handler);
+        }
         $this->subscribe($this->channel);
     }
 

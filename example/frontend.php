@@ -1,6 +1,6 @@
 <html>
 <head>
-    <script src="http://larastream.app/dist/streamline.js"></script>
+    <script src="http://larastream.app/streamline.js"></script>
     <script>
 
          window.onload = function(){
