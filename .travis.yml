@@ -8,5 +8,8 @@ php:
 services:
   - redis-server
 
+before_script:
+  - composer install --dev
+
 script:
   - ./vendor/bin/phpunit tests/
