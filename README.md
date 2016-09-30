@@ -30,7 +30,8 @@ Allowing features such as
 ``` composer require rockstarcode/streamline ```
 
 #### Laravel
-``` ///routes file
+```
+// routes file
 
 Route::get('/subscribe/{channel}',function($channel){
     use RockstarCode\StreamLine\Subscribe;
@@ -67,10 +68,10 @@ Included in this repo you will find a very simple chat example in ./example
 The example expects for you to use apache or nginx and configure a virtualhost with a documentroot pointed to the examples path
 
 ```
-<VirtualHost *:80>
-        ServerName myexample.app (or whichever domain you choose)
-        DocumentRoot /path/to/streamline/example
-</VirtualHost>
+    <VirtualHost *:80>
+            ServerName myexample.app (or whichever domain you choose)
+            DocumentRoot /path/to/streamline/example
+    </VirtualHost>
 ```
 
 simply navigate to http://<your host>/ on two different browser tabs, you should be able to enter a name in each tab and send messages between each window.
