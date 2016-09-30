@@ -36,13 +36,16 @@ Allowing features such as
 Route::get('/subscribe/{channel}',function($channel){
     use RockstarCode\StreamLine\Subscribe;
 
-    $subscribe = new Subscribe($channel, function(){ /// optional custom connection
+    $subscribe = new Subscribe($channel, function(){
+        /// optional custom connection
+
         $client = new Redis();
         $client->connect('127.0.0.1');
         return $client;
     });
 
-    $subscribe->stream(function($message){ /// function that handles each message as it's received in the channel
+    $subscribe->stream(function($message){
+        /// function that handles each message as it's received in the channel
         echo json_encode(['status'=>true,'message'=>$message]);
     });
 });
@@ -81,8 +84,8 @@ simply navigate to http://<your host>/ on two different browser tabs, you should
 ### Common Issues
 
 #### Blocking Requests
-    If you are using Laravel's Valet, or PHP's built in web server, they do not handle concurrent connections well and block open streams. The only way to test this app is using a web server
-    capable of threading PHP executions.
+If you are using Laravel's Valet, or PHP's built in web server, they do not handle concurrent connections well and block open streams. The only way to test this app is using a web server
+capable of threading PHP executions.
 
 #### Questions/Comments/Commits
 
